@@ -23,13 +23,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QSqlQuery query;
 //    query.exec("create table inventory "
-//              "(id integer primary key, "
-//              "part varchar(20), "
-//              "description varchar(30), "
-//              "quanity integer)");
-
+//                  "(id integer primary key, "
+//                  "part varchar(20), "
+//                  "description varchar(30), "
+//                  "quanity integer)");
+    // query.exec(" ") returns true if it successfully ran
     if( query.exec("insert into inventory "
-               "values (4,'12398n', 'IC 311', 1)") )
+               "values (1,'12398n', 'IC 311', 1)") )
         qDebug() << "query success";
     else
         qDebug() << "query failed";
