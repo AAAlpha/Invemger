@@ -20,6 +20,7 @@ public:
 
 private slots:
     void handleButton();
+    void addToDB();
 
 private:
     Ui::MainWindow *ui;

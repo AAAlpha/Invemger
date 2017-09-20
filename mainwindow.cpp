@@ -41,8 +41,12 @@ MainWindow::MainWindow(QWidget *parent) :
     else
         qDebug() << "No table created";
 
+//    Focus on QLineEdit
+    ui->part_edit->setFocus();
+
     //    Signals and Slots
     connect(ui->pushButton, SIGNAL (released()), this, SLOT (handleButton()) );
+    connect(ui->quan_edit, SIGNAL (returnPressed()), this, SLOT (addToDB()) );
 }
 
 void MainWindow::handleButton()
@@ -61,6 +65,30 @@ void MainWindow::handleButton()
         qDebug() << "query success";
     else
         qDebug() << "query failed";
+}
+
+void MainWindow::addToDB()
+{
+    qDebug() << "adding to DB" << ui->part_edit->text()
+             << " | " << ui->desc_edit->text()
+             << " | " << ui->quan_edit->text().toInt();
+
+    QSqlQuery query(mydb);
+
+    query.prepare("INSERT INTO inventory (part, description, quanity) "
+                  "VALUES (:part, :descrip, :quant)" );
+    query.bindValue(":part", ui->part_edit->text() );
+    query.bindValue(":descrip", ui->desc_edit->text() );
+    query.bindValue(":quant", ui->quan_edit->text().toInt() );
+
+    if ( query.exec() )
+        qDebug() << "query success";
+    else
+        qDebug() << "query failed";
+
+    ui->part_edit->clear();
+    ui->desc_edit->clear();
+    ui->quan_edit->clear();
 }
 
 MainWindow::~MainWindow()
